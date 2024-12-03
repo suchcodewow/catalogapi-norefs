@@ -1,0 +1,49 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: ondemandCatalogEnv
+  title: On-demand API environment
+  description: Creates a catalogapi environment for isolated testing
+  actionButton:
+    text: Create
+  icon: java
+  tags:
+    - java
+    - ondemand
+spec:
+  owner: backendteam@globalcorp.com
+  type: environment
+  parameters:
+    - title: Parameters for build environment
+      required:
+        - uniqueId
+        - backendEnv
+      properties:
+        uniqueId:
+          title: Enter a unique identifier
+          type: string
+          description: use lowercase alphanumeric only
+        backendEnv:
+          title: Which backend database environment?
+          enum: ["silver", "green"]
+          ui:widget: radio
+          description: select legacy or modern schema
+        token:
+          title: Harness Token
+          type: string
+          ui:widget: password
+          ui:field: HarnessAuthToken
+  steps:
+    - id: trigger
+      name: Deploy new api with selected backend
+      action: trigger:harness-custom-pipeline
+      input:
+        url: "https://app.harness.io/ng/account/MdgJ-U9RQ4WUW1GI01VFqg/module/cd/orgs/default/projects/default_project/pipelines/CICDcatalogapi/pipeline-studio?storeType=INLINE"
+        inputset:
+          uniqueIdentifer: ${{ parameters.uniqueId }}
+          database: ${{ parameters.backendEnv }}
+        apikey: ${{ parameters.token }}
+  output:
+    links:
+      - title: Pipeline Details
+        url: ${{ steps.trigger.output.PipelineUrl }}
