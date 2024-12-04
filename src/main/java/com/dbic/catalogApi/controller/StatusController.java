@@ -1,22 +1,12 @@
 package com.dbic.catalogApi.controller;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.HashMap;
 import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-// import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 
 @RestController
 public class StatusController {
-	// @Value("${app.appVersion:notset}")
-    // private String appVersion;
-	// @Value("${app.instance:notset}")
-    // private String instance;
-	// @Value("${app.database:notset}")
-    // private String database;
 
 	@Autowired
     private Environment environment;
