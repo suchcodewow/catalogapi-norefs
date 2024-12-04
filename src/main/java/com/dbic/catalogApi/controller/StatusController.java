@@ -15,7 +15,7 @@ public class StatusController {
 		public Map<String, String> statusMessage() {
     	HashMap<String, String> map = new HashMap<>();
     	map.put("instance", environment.getProperty("instance"));
-    	map.put("Database", environment.getProperty("Database"));
+    	map.put("Database", environment.getProperty("database"));
     	map.put("appVersion", environment.getProperty("appVersion"));
     	map.put("Status", "OK");
     return map;
